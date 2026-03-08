@@ -1,0 +1,10 @@
+
+spring:
+  application:
+    name: exo_ggvar_application
+  profiles:
+    include: dao
+
+server:
+  port: 8080
+
