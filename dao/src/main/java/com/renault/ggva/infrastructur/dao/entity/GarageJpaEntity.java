@@ -19,6 +19,9 @@ public class GarageJpaEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "city", nullable = false)
+    private String city;
+
     @Column(name = "address", nullable = false)
     private String address;
 

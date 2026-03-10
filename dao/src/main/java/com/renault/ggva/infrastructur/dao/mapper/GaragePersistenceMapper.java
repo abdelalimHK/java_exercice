@@ -42,19 +42,20 @@ public class GaragePersistenceMapper {
     }
 
     public Garage toDomain(GarageJpaEntity entity) {
-//        List<Vehicle> vehicles = entity.getVehicles()
-//                .stream()
-//                .map(vehicleMapper::toDomain)
-//                .toList();
+        List<Vehicle> vehicles = entity.getVehicles()
+                .stream()
+                .map(vehicleMapper::toDomain)
+                .toList();
 
         return Garage.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .city(entity.getCity())
                 .address(entity.getAddress())
                 .telephone(entity.getTelephone())
                 .email(entity.getEmail())
                 .horairesOuverture(toDomainMap(entity.getHorairesOuverture()))
-                //.vehicles(vehicles)
+                .vehicles(vehicles)
                 .build();
     }
 

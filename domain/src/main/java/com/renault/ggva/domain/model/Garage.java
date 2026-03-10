@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +14,12 @@ import java.util.Map;
 public class Garage {
     private Long id;
     private String name;
+    private String city;
     private String address;
     private String telephone;
     private String email;
     private Map<DayOfWeek, List<OpeningTime>> horairesOuverture;
-    private List<Vehicle> vehicles;
+    @Builder.Default
+    private List<Vehicle> vehicles = new ArrayList<>();
 
 }

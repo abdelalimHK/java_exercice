@@ -4,8 +4,8 @@ public enum FuelType {
 
     ESSENCE("Essence"),
     DIESEL("Diesel"),
-    ELECTRIQUE("Électrique"),
-    HYBRIDE("Hybride"),
+    ELECTRIC("Électrique"),
+    HYBRID("Hybride"),
     HYBRIDE_RECHARGEABLE("Hybride Rechargeable");
 
     private final String label;
