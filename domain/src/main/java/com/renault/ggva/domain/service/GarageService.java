@@ -1,23 +1,37 @@
 package com.renault.ggva.domain.service;
 
 import com.renault.ggva.domain.enums.FuelType;
+import com.renault.ggva.domain.event.DomainEvent;
 import com.renault.ggva.domain.event.VehicleAddedEvent;
 import com.renault.ggva.domain.exception.garage.GarageCapacityExceededException;
 import com.renault.ggva.domain.exception.vehicule.InvalidVehicleException;
 import com.renault.ggva.domain.model.Garage;
 import com.renault.ggva.domain.model.Vehicle;
 import com.renault.ggva.domain.valueobject.OpeningTime;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Component
 public class GarageService {
 
-    private static final int MAX_VEHICLES = 50;
+    private List<DomainEvent> domainEvents = new ArrayList<>();
+
+    void registerEvent(DomainEvent event) {
+        this.domainEvents.add(event);
+    }
+
+    public List<DomainEvent> pullDomainEvents() {
+        List<DomainEvent> events = new ArrayList<>(domainEvents);
+        domainEvents.clear();
+        return events;
+    }
     public Garage createGarage(String name, String address, String telephone,
                                String email,
                                Map<DayOfWeek, List<OpeningTime>> horairesOuverture) {
@@ -53,6 +67,16 @@ public class GarageService {
                 .fuelType(fuelType)
                 .anneeFabrication(anneeFabrication)
                 .build();
+
+        registerEvent(new VehicleAddedEvent(
+                vehicle.getId(),
+                vehicle.getGarageId(),
+                vehicle.getBrand(),
+                vehicle.getModel(),
+                vehicle.getFuelType(),
+                vehicle.getAnneeFabrication(),
+                LocalDateTime.now()
+        ));
 
         garage.getVehicles().add(vehicle);
 

@@ -1,0 +1,15 @@
+services:
+  artemis:
+    image: apache/activemq-artemis:latest
+    container_name: artemis
+    ports:
+      - "61616:61616"   # CORE/AMQP protocol
+      - "8161:8161"     # Web console
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+    volumes:
+      - artemis_data:/var/lib/artemis-instance
+
+volumes:
+  artemis_data:

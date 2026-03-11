@@ -2,6 +2,7 @@ package com.renault.ggva.application.usecase.vehicule;
 
 import com.renault.ggva.application.command.vehicule.AddVehicleCommand;
 import com.renault.ggva.application.port.in.vehicule.AddVehicleUseCase;
+import com.renault.ggva.application.port.out.garage.EventPublisher;
 import com.renault.ggva.application.port.out.garage.GarageRepository;
 import com.renault.ggva.domain.exception.garage.GarageNotFoundException;
 import com.renault.ggva.domain.model.Garage;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 public class AddVehicleService implements AddVehicleUseCase {
 
     private final GarageRepository garageRepository;
-    private final GarageService garageService = new GarageService();
+    private final GarageService garageService ;
+
+    private final EventPublisher eventPublisher;
 
     public Vehicle execute(AddVehicleCommand command) {
         Garage garage = garageRepository
@@ -31,6 +34,8 @@ public class AddVehicleService implements AddVehicleUseCase {
         );
 
         garageRepository.save(garage);
+
+        garageService.pullDomainEvents().forEach(eventPublisher::publish);
 
         return vehicle;
     }

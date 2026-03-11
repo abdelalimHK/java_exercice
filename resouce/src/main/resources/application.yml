@@ -3,7 +3,9 @@ spring:
   application:
     name: exo_ggvar_application
   profiles:
-    include: dao
+    include:
+      - dao
+      - messaging
 
 server:
   port: 8080

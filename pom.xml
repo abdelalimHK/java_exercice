@@ -26,7 +26,8 @@
 		<module>domain</module>
 		<module>dao</module>
 		<module>application</module>
-	</modules>
+        <module>messaging</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -54,6 +55,11 @@
 			<dependency>
 				<groupId>com.renault.ggva</groupId>
 				<artifactId>dao</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.renault.ggva</groupId>
+				<artifactId>messaging</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
