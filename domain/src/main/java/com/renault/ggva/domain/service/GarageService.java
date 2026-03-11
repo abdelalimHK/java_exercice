@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@Component
 public class GarageService {
 
     private List<DomainEvent> domainEvents = new ArrayList<>();
@@ -35,11 +34,6 @@ public class GarageService {
     public Garage createGarage(String name, String address, String telephone,
                                String email,
                                Map<DayOfWeek, List<OpeningTime>> horairesOuverture) {
-//        validateName(name);
-//        validateAddress(address);
-//        validateTelephone(telephone);
-//        validateEmail(email);
-//        validateHoraires(horairesOuverture);
 
         return Garage.builder()
                 .name(name)

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class AddVehicleService implements AddVehicleUseCase {
 
     private final GarageRepository garageRepository;
-    private final GarageService garageService ;
+    private final GarageService garageService = new GarageService() ;
 
     private final EventPublisher eventPublisher;
 
