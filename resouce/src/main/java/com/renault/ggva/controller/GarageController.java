@@ -2,38 +2,42 @@ package com.renault.ggva.controller;
 
 import com.renault.ggva.application.port.in.garage.GetGarageUseCase;
 import com.renault.ggva.application.port.in.garage.ListGaragesUseCase;
+import com.renault.ggva.application.port.in.vehicule.AddVehicleUseCase;
 import com.renault.ggva.application.query.GarageSearchCriteria;
 import com.renault.ggva.application.query.PageRequest;
 import com.renault.ggva.application.query.PagedResult;
 import com.renault.ggva.domain.enums.AccessoryType;
 import com.renault.ggva.domain.enums.FuelType;
 import com.renault.ggva.domain.model.Garage;
+import com.renault.ggva.domain.model.Vehicle;
+import com.renault.ggva.dto.request.AddVehicleRequest;
 import com.renault.ggva.dto.response.GarageResponse;
 import com.renault.ggva.dto.response.PagedResponse;
+import com.renault.ggva.dto.response.VehicleResponse;
 import com.renault.ggva.mapper.GarageWebMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/garages")
 @AllArgsConstructor
 public class GarageController {
 
     private final GetGarageUseCase getGarageUseCase;
     private final ListGaragesUseCase listGaragesUseCase;
+    private final AddVehicleUseCase addVehicleUseCase;
     private final GarageWebMapper garageWebMapper;
 
-    @GetMapping("/garage/{id}")
+    @GetMapping("/{id}")
     Garage getGarageById(@PathVariable Long id) {
         return getGarageUseCase.execute(id);
     }
 
-    @GetMapping("/garages")
+    @GetMapping
     public ResponseEntity<PagedResponse<GarageResponse>> list(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String city,
@@ -62,6 +66,16 @@ public class GarageController {
         );
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{garageId}/vehicles")
+    @ResponseStatus(HttpStatus.CREATED)
+    public VehicleResponse addVehicle(@PathVariable Long garageId,
+                                      @RequestBody AddVehicleRequest request) {
+        Vehicle vehicle = addVehicleUseCase.execute(
+                garageWebMapper.toAddVehicleCommand(garageId, request)
+        );
+        return garageWebMapper.toVehicleResponse(vehicle);
     }
 
     private PagedResult<GarageResponse> mapToGarageResponse(

@@ -21,5 +21,6 @@ public class Garage {
     private Map<DayOfWeek, List<OpeningTime>> horairesOuverture;
     @Builder.Default
     private List<Vehicle> vehicles = new ArrayList<>();
+    private int capacity;
 
 }

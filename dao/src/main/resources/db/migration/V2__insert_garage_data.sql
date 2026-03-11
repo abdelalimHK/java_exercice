@@ -1,8 +1,8 @@
 -- Insert garages
-INSERT INTO garages (name, city, address, telephone, email) VALUES
-('Garage Central', 'Paris',   '12 Rue de la Paix, Paris',         '0123456789', 'central@garage.fr'),
-('Garage Nord', 'Lyon' ,   '45 Avenue Victor Hugo, Lyon',       '0456789123', 'nord@garage.fr'),
-('Garage Sud', 'Marseille',   '78 Boulevard Michelet, Marseille',  '0789123456', 'sud@garage.fr');
+INSERT INTO garages (name, city, address, telephone, email, capacity) VALUES
+('Garage Central', 'Paris',   '12 Rue de la Paix, Paris',         '0123456789', 'central@garage.fr', 9),
+('Garage Nord', 'Lyon' ,   '45 Avenue Victor Hugo, Lyon',       '0456789123', 'nord@garage.fr', 5),
+('Garage Sud', 'Marseille',   '78 Boulevard Michelet, Marseille',  '0789123456', 'sud@garage.fr', 7);
 
 -- Garage 1 - opening times
 INSERT INTO garage_opening_times (garage_id, day_of_week, start_time, end_time) VALUES

@@ -4,6 +4,7 @@ import com.renault.ggva.domain.enums.FuelType;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,5 +17,6 @@ public class Vehicle {
     private String model;
     private int anneeFabrication;
     private FuelType fuelType;
-    private List<Accessory> accessories;
+    @Builder.Default
+    private List<Accessory> accessories = new ArrayList<>();
 }

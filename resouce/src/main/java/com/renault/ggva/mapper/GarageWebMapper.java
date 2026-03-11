@@ -1,10 +1,16 @@
 package com.renault.ggva.mapper;
 
+import com.renault.ggva.application.command.vehicule.AddVehicleCommand;
+import com.renault.ggva.domain.model.Accessory;
 import com.renault.ggva.domain.model.Garage;
+import com.renault.ggva.domain.model.Vehicle;
 import com.renault.ggva.domain.valueobject.OpeningTime;
+import com.renault.ggva.dto.request.AddVehicleRequest;
 import com.renault.ggva.dto.request.OpeningTimeRequest;
+import com.renault.ggva.dto.response.AccessoryResponse;
 import com.renault.ggva.dto.response.GarageResponse;
 import com.renault.ggva.dto.response.OpeningTimeResponse;
+import com.renault.ggva.dto.response.VehicleResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -26,6 +32,42 @@ public class GarageWebMapper {
                 garage.getEmail(),
                 toOpeningTimeResponseMap(garage.getHorairesOuverture()),
                 garage.getVehicles() != null ? garage.getVehicles().size() : 0
+        );
+    }
+
+    public AddVehicleCommand toAddVehicleCommand(Long garageId,
+                                                 AddVehicleRequest request) {
+        return new AddVehicleCommand(
+                garageId,
+                request.brand(),
+                request.model(),
+                request.anneeFabrication(),
+                request.fuelType()
+        );
+    }
+
+    public VehicleResponse toVehicleResponse(Vehicle vehicle) {
+        return new VehicleResponse(
+                vehicle.getId(),
+                vehicle.getGarageId(),
+                vehicle.getBrand(),
+                vehicle.getModel(),
+                vehicle.getAnneeFabrication(),
+                vehicle.getFuelType(),
+                vehicle.getAccessories()
+                        .stream()
+                        .map(this::toAccessoryResponse)
+                        .toList()
+        );
+    }
+
+    public AccessoryResponse toAccessoryResponse(Accessory accessory) {
+        return new AccessoryResponse(
+                accessory.getId(),
+                accessory.getNom(),
+                accessory.getDescription(),
+                accessory.getPrix(),
+                accessory.getType()
         );
     }
 

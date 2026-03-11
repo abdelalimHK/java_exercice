@@ -7,7 +7,9 @@ import com.renault.ggva.infrastructur.dao.entity.GarageJpaEntity;
 import com.renault.ggva.infrastructur.dao.entity.VehicleJpaEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class VehiclePersistenceMapper {
@@ -31,7 +33,8 @@ public class VehiclePersistenceMapper {
         List<AccessoryJpaEntity> accessories = vehicle.getAccessories()
                 .stream()
                 .map(a -> accessoryMapper.toEntity(a, entity))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
+
         entity.setAccessories(accessories);
 
         return entity;

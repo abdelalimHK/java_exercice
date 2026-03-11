@@ -4,7 +4,8 @@ CREATE TABLE garages (
     city      VARCHAR(100) NOT NULL,
     address   VARCHAR(255) NOT NULL,
     telephone VARCHAR(20)  NOT NULL,
-    email     VARCHAR(150) NOT NULL
+    email     VARCHAR(150) NOT NULL,
+    capacity    INTEGER    NOT NULL
 );
 
 CREATE TABLE garage_opening_times (

@@ -4,7 +4,7 @@ import com.renault.ggva.domain.exception.DomainException;
 import com.renault.ggva.domain.valueobject.GarageId;
 
 public class GarageCapacityExceededException extends DomainException {
-    public GarageCapacityExceededException(GarageId id, int max) {
-        super("Garage " + id.value() + " has reached max capacity of " + max);
+    public GarageCapacityExceededException(Long id, int max) {
+        super("Garage " + id + " has reached max capacity of " + max);
     }
 }

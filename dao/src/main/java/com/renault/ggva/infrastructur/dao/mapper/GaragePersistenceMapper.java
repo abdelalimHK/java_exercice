@@ -9,7 +9,7 @@ import com.renault.ggva.infrastructur.dao.entity.VehicleJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,10 +27,12 @@ public class GaragePersistenceMapper {
         GarageJpaEntity entity = new GarageJpaEntity();
         entity.setId(garage.getId());
         entity.setName(garage.getName());
+        entity.setCity(garage.getCity());
         entity.setAddress(garage.getAddress());
         entity.setTelephone(garage.getTelephone());
         entity.setEmail(garage.getEmail());
         entity.setHorairesOuverture(toEmbeddableList(garage.getHorairesOuverture()));
+        entity.setCapacity(garage.getCapacity());
 
         List<VehicleJpaEntity> vehicles = garage.getVehicles()
                 .stream()
@@ -45,7 +47,7 @@ public class GaragePersistenceMapper {
         List<Vehicle> vehicles = entity.getVehicles()
                 .stream()
                 .map(vehicleMapper::toDomain)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
 
         return Garage.builder()
                 .id(entity.getId())
@@ -56,6 +58,7 @@ public class GaragePersistenceMapper {
                 .email(entity.getEmail())
                 .horairesOuverture(toDomainMap(entity.getHorairesOuverture()))
                 .vehicles(vehicles)
+                .capacity(entity.getCapacity())
                 .build();
     }
 
